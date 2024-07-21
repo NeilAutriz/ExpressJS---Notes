@@ -15,7 +15,7 @@ const handleLogout = async (req, res) => {
     // Is refreshToken in db?
     const foundUser = usersDB.users.find(person => person.refreshToken === refreshToken);
     if (!foundUser) {
-        res.clearCookie('jwt', { httpOnly: true, sameSite: 'None', secure: true });
+        res.clearCookie('jwt', { httpOnly: true });
         return res.sendStatus(204);
     }
 
@@ -26,9 +26,9 @@ const handleLogout = async (req, res) => {
     await fsPromises.writeFile(
         path.join(__dirname, '..', 'model', 'users.json'),
         JSON.stringify(usersDB.users)
-    );
+    );  
 
-    res.clearCookie('jwt', { httpOnly: true, sameSite: 'None', secure: true });
+    res.clearCookie('jwt', { httpOnly: true });
     res.sendStatus(204);
 }
 
